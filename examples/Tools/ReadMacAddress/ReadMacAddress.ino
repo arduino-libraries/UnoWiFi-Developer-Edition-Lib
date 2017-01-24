@@ -9,8 +9,10 @@ This sketch Read the MAC Address from the ESP8266EX and print the code in the co
 WifiData EspSerial;
 String mac = "";         // a string to hold incoming data
 String ssid="";
+String espresponse="";
 boolean flag=false;
 
+//These commands, in SLIP protocol, get the MAC Address from the ESP8266.
 char command1[]={0xc0,0x0,0xa,0x4,0x0,0x0,0x0,0x0,0x0,0x50,0x0,0xf0,0x3f,0xc0};
 char command2[]={0xc0,0x0,0xa,0x4,0x0,0x0,0x0,0x0,0x0,0x54,0x0,0xf0,0x3f,0xc0};
 
@@ -26,19 +28,6 @@ void setup()
   while(!Serial);
 }
 
-//Parse the reply
-String cleanString(char inChar){
-  String string = String(inChar, HEX);
-  if(string.length()==1)
-    string="0"+string;
-  if(string.length()==3)
-    string=String(string.charAt(1)) + String(string.charAt(2));
-  if(string.length()==4)
-    string=String(string.charAt(2)) + String(string.charAt(3));
-
-  return string;
-}
-
 void loop()
 {
   read_mac();
@@ -46,8 +35,6 @@ void loop()
 
 void read_mac(){
   int i;
-  int c=0;
-
   //Send the command1 to the ESP char by char
   for(i=0; i<sizeof(command1); i++)
       EspSerial.write(command1[i]);
@@ -55,7 +42,6 @@ void read_mac(){
   //Read the reply but the response is not useful
   while (EspSerial.available()) {
     EspSerial.read();
-    c++;
   }
 
   //Send the command2 to the ESP char by char
@@ -64,30 +50,48 @@ void read_mac(){
 
   //Read the reply
   while (EspSerial.available()) {
-    char inChar = (char)EspSerial.read();
-    c++;
-
-    //Read and stor the char 9, 18 and 19.
-
-    if(c==9){
-      mac=cleanString(inChar) + mac;
-      ssid=mac;
-    }
-    if(c==18){
-      String tmp = cleanString(inChar);
-      mac=tmp + ":" +  mac;
-      ssid=tmp + ssid;
-    }
-    if(c==19){
-      String tmp = cleanString(inChar);
-      mac=tmp + ":" + mac;
-      ssid=tmp + ssid;
-    }
+    int inChar = (int)EspSerial.read();
+    espresponse+=String(inChar, HEX);
   }
-
-  if(mac.length()==0)
+  //Debug
+  //Serial.println("");
+  //Serial.println(espresponse);
+  if(espresponse.length()==0)
     Serial.println("Please, push the  ESP B/L button on the board and plug the USB cable before run the sketch");
   else{
+    //In according to the SLIP protocol, here the parsing of the ESP8266 response
+    int pos1= espresponse.lastIndexOf("c01a20");
+    mac=String(espresponse.charAt(pos1+8))+String(espresponse.charAt(pos1+9))+":"+String(espresponse.charAt(pos1+6))+String(espresponse.charAt(pos1+7));
+    ssid=String(espresponse.charAt(pos1+8))+String(espresponse.charAt(pos1+9))+String(espresponse.charAt(pos1+6))+String(espresponse.charAt(pos1+7));
+    String last_char_mac="";
+    int dbpos=espresponse.lastIndexOf("db");
+    if (dbpos!=-1){
+      if(espresponse.length()==32){
+        last_char_mac="ff";
+      }else{
+        if(espresponse.charAt(dbpos+2)=='d' && espresponse.charAt(dbpos+3)=='d'){
+          if(espresponse.charAt(dbpos+4)=='0' && espresponse.charAt(dbpos+5)=='0')
+            last_char_mac="db";
+          else
+            last_char_mac=String(espresponse.charAt(dbpos+4)) + String(espresponse.charAt(dbpos+5));
+        }
+        if(espresponse.charAt(dbpos+2)=='d' && espresponse.charAt(dbpos+3)=='c'){
+          if(espresponse.charAt(dbpos+4)=='0' && espresponse.charAt(dbpos+5)=='0')
+            last_char_mac=String(espresponse.charAt(dbpos+6)) + String(espresponse.charAt(dbpos+7));
+          else
+            last_char_mac=String(espresponse.charAt(dbpos+4)) + String(espresponse.charAt(dbpos+5));
+        }
+      }
+    }else{
+      if(espresponse.length()==31){
+         last_char_mac=String(espresponse.charAt(9))+String(espresponse.charAt(10));
+       }else{
+         last_char_mac=String(espresponse.charAt(10))+String(espresponse.charAt(11));
+       }
+    }
+    mac+=":" + last_char_mac;
+    ssid+=last_char_mac;
+
     Serial.println("\nMAC:");
     String mac_complete="5c:cf:7f:" + mac;
     Serial.println(mac_complete);
