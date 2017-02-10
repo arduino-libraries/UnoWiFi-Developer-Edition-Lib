@@ -15,7 +15,7 @@ MQTT::MQTT(ESP *esp8266)
 boolean MQTT::begin(const char* client_id, const char* user, const char* pass, uint16_t keep_alive, boolean clean_seasion)
 {
   uint16_t crc;
-  uint32_t wait, cb_data;
+  uint32_t cb_data;
 
   crc = esp->request(CMD_MQTT_SETUP, 0, 1, 9);
   crc = esp->request(crc,(uint8_t*)client_id, strlen(client_id));
@@ -45,7 +45,7 @@ boolean MQTT::begin(const char* client_id, const char* user, const char* pass, u
 boolean MQTT::lwt(const char* topic, const char* message, uint8_t qos, uint8_t retain)
 {
   uint16_t crc;
-  uint32_t wait;
+  //uint32_t wait;
 
 
   crc = esp->request(CMD_MQTT_LWT, 0, 1, 5);

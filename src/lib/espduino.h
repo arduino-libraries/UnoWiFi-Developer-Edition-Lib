@@ -1,6 +1,6 @@
 /**
  * \file
- *       ESP8266 bridge arduino library 
+ *       ESP8266 bridge arduino library
  * \author
  *       Tuan PM <tuanpm@live.com>
  */
@@ -30,7 +30,7 @@ typedef enum
   CMD_MQTT_SETUP,
   CMD_MQTT_CONNECT,
   CMD_MQTT_DISCONNECT,
-  CMD_MQTT_PUBLISH, 
+  CMD_MQTT_PUBLISH,
   CMD_MQTT_SUBSCRIBE,
   CMD_MQTT_LWT,
   CMD_MQTT_EVENTS,
@@ -115,12 +115,12 @@ public:
 
 private:
   Stream *_serial;
-  
+
   boolean _debugEn;
   PROTO _proto;
   uint8_t _protoBuf[512];
   int _chip_pd;
-  
+
 
   void init();
   void INFO(String info);

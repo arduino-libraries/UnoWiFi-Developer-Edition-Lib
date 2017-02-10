@@ -1,6 +1,6 @@
 /**
  * \file
- *       ESP8266 bridge arduino library 
+ *       ESP8266 bridge arduino library
  * \author
  *       Tuan PM <tuanpm@live.com>
  */
@@ -27,7 +27,7 @@ int32_t RESPONSE::popArgs(uint8_t *data, uint16_t maxLen)
 
    if(arg_num >= cmd->argc)
      return -1;
- 
+
   length = *(uint16_t*)arg_ptr;
   len = length;
   arg_ptr += 2;
@@ -39,7 +39,7 @@ int32_t RESPONSE::popArgs(uint8_t *data, uint16_t maxLen)
       arg_num ++;
       return maxLen;
     }
-      
+
   }
   arg_num ++;
   return len;
@@ -102,7 +102,7 @@ void ESP::protoCompletedCb(void)
       return_cmd = cmd->cmd;
       return_value = cmd->_return;
     }
-    
+
   }
 }
 
@@ -164,7 +164,7 @@ uint16_t ESP::request(uint16_t crc_in, uint8_t* data, uint16_t len)
     data ++;
     if(pad_len > 0) pad_len --;
   }
-  
+
   while(pad_len --){
     write(temp);
     crc_in = crc16_data((uint8_t*)&temp, 1, crc_in);
@@ -232,7 +232,7 @@ boolean ESP::ready()
       return true;
   }
   return false;
-  
+
 }
 boolean ESP::waitReturn(uint32_t timeout)
 {
@@ -258,18 +258,18 @@ void ESP::process()
     case 0x7D:
       _proto.isEsc = 1;
       break;
-    
+
     case 0x7E:
       _proto.dataLen = 0;
       _proto.isEsc = 0;
       _proto.isBegin = 1;
       break;
-    
+
     case 0x7F:
       protoCompletedCb();
       _proto.isBegin = 0;
       break;
-    
+
     default:
       if(_proto.isBegin == 0) {
         if(_debugEn) {
@@ -281,12 +281,11 @@ void ESP::process()
         value ^= 0x20;
         _proto.isEsc = 0;
       }
-        
+
       if(_proto.dataLen < _proto.bufSize)
         _proto.buf[_proto.dataLen++] = value;
-        
+
       break;
     }
   }
 }
-

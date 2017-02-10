@@ -1,7 +1,7 @@
-/* 
+/*
 Description:
 This is a example code for Sandbox Electronics' I2C/SPI to UART bridge module.
-You can get one of those products on 
+You can get one of those products on
 http://sandboxelectronics.com
 
 Version:
@@ -16,7 +16,7 @@ Tiequan Shao          info@sandboxelectronics.com
 Lisence:
 CC BY-NC-SA 3.0
 
-Please keep the above information when you use this code in your project. 
+Please keep the above information when you use this code in your project.
 */
 
 #if defined(__AVR_ATmega328P__)
@@ -37,7 +37,7 @@ void WifiData::begin(uint32_t baud)
 
     if ( protocol == SC16IS750_PROTOCOL_I2C) {
         WIRE.begin();
-    } 
+    }
     ResetDevice();
     FIFOEnable(1);
     SetBaudrate(baud);
@@ -82,7 +82,7 @@ uint8_t WifiData::digitalRead(uint8_t pin)
 
 uint8_t WifiData::ReadRegister(uint8_t reg_addr)
 {
-    uint8_t result;
+    uint8_t result = 0;
     if ( protocol == SC16IS750_PROTOCOL_I2C ) {  // register read operation via I2C
 
         WIRE.beginTransmission(device_address_sspin);
@@ -90,7 +90,7 @@ uint8_t WifiData::ReadRegister(uint8_t reg_addr)
         WIRE.endTransmission(0);
         WIRE.requestFrom(device_address_sspin,(uint8_t)1);
         result = WIRE.read();
-    } 
+    }
 
     return result;
 
@@ -103,7 +103,7 @@ void WifiData::WriteRegister(uint8_t reg_addr, uint8_t val)
         WIRE.write((reg_addr<<3));
         WIRE.write(val);
         WIRE.endTransmission(1);
-    } 
+    }
 
 
     return ;
@@ -226,7 +226,7 @@ uint8_t WifiData::GPIOGetPinState(uint8_t pin_number)
     uint8_t temp_iostate;
 
     temp_iostate = ReadRegister(SC16IS750_REG_IOSTATE);
-    if ( temp_iostate & (0x01 << pin_number)== 0 ) {
+    if ( (temp_iostate) & ((0x01 << pin_number)== 0) ) {
       return 0;
     }
     return 1;

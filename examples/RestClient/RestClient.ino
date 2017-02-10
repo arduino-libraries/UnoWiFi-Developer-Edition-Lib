@@ -13,10 +13,10 @@ http://www.arduino.org/learning/tutorials/boards-tutorials/restserver-and-restcl
 
 void setup() {
 
-	char* connector = "rest";
-	char* server = "download.arduino.org";
-	char* method = "GET";
-	String resource = "/latest.txt";
+	const char* connector = "rest";
+	const char* server = "download.arduino.org";
+	const char* method = "GET";
+	const char* resource = "/latest.txt";
 
 	Serial.begin(9600);
 	Ciao.begin();
@@ -31,7 +31,7 @@ void loop() {
 
 }
 
-void doRequest(char* conn, char* server, String command, char* method){
+void doRequest(const char* conn, const char* server, const char* command, const char* method){
 	CiaoData data = Ciao.write(conn, server, command, method);
 	if (!data.isEmpty()){
 		Ciao.println( "State: " + String (data.get(1)) );
