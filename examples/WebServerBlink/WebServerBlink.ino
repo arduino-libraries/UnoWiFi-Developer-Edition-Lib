@@ -41,25 +41,25 @@ void process(WifiData client) {
 
 void WebServer(WifiData client) {
 
-          client.println("HTTP/1.1 200 OK");
-          client.println("Content-Type: text/html");
-          client.println();
-          client.println("<html>");
+  client.println("HTTP/1.1 200 OK");
+  client.println("Content-Type: text/html");
+  client.println();
+  client.println("<html>");
 
-          client.println("<head> </head>");
-          client.print("<body>");
+  client.println("<head> </head>");
+  client.print("<body>");
 
-          client.print("Click<input type=button onClick=\"var w=window.open('/arduino/digital/13/1','_parent');w.close();\"value='ON'>pin13 ON<br>");
-          client.print("Click<input type=button onClick=\"var w=window.open('/arduino/digital/13/0','_parent');w.close();\"value='OFF'>pin13 OFF<br>");
+  client.print("Click<input type=button onClick=\"var w=window.open('/arduino/digital/13/1','_parent');w.close();\"value='ON'>pin13 ON<br>");
+  client.print("Click<input type=button onClick=\"var w=window.open('/arduino/digital/13/0','_parent');w.close();\"value='OFF'>pin13 OFF<br>");
 
-          client.print("</body>");
-          client.println("</html>");
-          client.print(DELIMITER); // very important to end the communication !!!
+  client.print("</body>");
+  client.println("</html>");
+  client.print(DELIMITER); // very important to end the communication !!!
 
 }
 
 void digitalCommand(WifiData client) {
-  int pin, value;
+  int pin, value = 0;
 
   // Read pin number
   pin = client.parseInt();

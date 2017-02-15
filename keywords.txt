@@ -22,3 +22,5 @@ write	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
+DELIMITER	LITERAL1
+EOL	LITERAL1

@@ -4,8 +4,11 @@
 *
 * File : CiaoData.h
 * Date : 2016/02/16
-* Revision : 0.0.2 $
-* Author: andrea[at]arduino[dot]org
+* Author: andrea[at]arduino[dot]org - rev. 0.0.2
+*
+* Modified: 02 Feb 2017 - sergio@arduino.org - rev. 0.0.3
+*
+* Revision: 0.0.3
 *
 ****************************************************************************
 
@@ -36,18 +39,18 @@
 class CiaoData {
 	public:
 
-		char* get(int index){
+		const char* msg_split[3];
+
+		const char* get(int index){
 			return msg_split[index];
 		}
 
 		bool isEmpty(){
 			//if (atoi( get(1) ) > 0)
-			if (get(2) != "")
+			//if (get(2) != "")
+			if ( strncmp(get(2), "", 1) != 0)
 				return false;
 			else
 				return true;
 		}
-
-	public:
-		char* msg_split[3];
 };

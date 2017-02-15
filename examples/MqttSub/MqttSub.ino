@@ -20,15 +20,10 @@ void setup() {
 	Serial.begin(9600);
 }
 
-
 void loop(){
-
-	delay(5000);
-
-	CiaoData data = Ciao.read(CONNECTOR, TOPIC);        //topic to manage servo
+	CiaoData data = Ciao.read(CONNECTOR, TOPIC);
 	if (!data.isEmpty()){
-		char* value = data.get(2);
+		const char* value = data.get(2);
 		Serial.println(value);
 	}
-
 }

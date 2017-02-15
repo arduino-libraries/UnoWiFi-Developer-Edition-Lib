@@ -22,19 +22,32 @@ class ArduinoWifiClass : public WifiData
 		void begin();
 		boolean connected();
 		void connect(char* , char*);
-
-		void powerON();
-		void powerOFF();
-
+		
 };
 
 class CiaoClass : public WifiData
 {
 	public:
 		void begin();
+		CiaoData read( const char* connector, const char* hostname, const char* data, const char* method = "GET");
+		CiaoData write( const char* connector, const char* hostname, const char* data, const char* method = "GET");
 
-		CiaoData read( char*, char*, String data = "", char* method = "GET");      // “rest”, ”hostname”, data, ”method”
-		CiaoData write( char*, char*, String, char* method = "GET");      // “rest”, ”hostname”, data, ”method”
+		CiaoData read( const char* connector, const char* hostname, String data, String method = "GET");
+		CiaoData write( const char* connector, const char* hostname, String data, String method = "GET");
+
+		CiaoData read( const char* connector, const char* hostname){
+			return read(connector, hostname, "", "GET");
+		}
+		CiaoData write( const char* connector, const char* hostname){
+			return write(connector, hostname, "", "GET");
+		}
+
+		CiaoData read( String connector, String hostname){
+			return read(connector.c_str(), hostname.c_str(), "", "GET");
+		}
+		CiaoData write( String connector, String hostname){
+			return write(connector.c_str(), hostname.c_str(), "", "GET");
+		}
 };
 
 
