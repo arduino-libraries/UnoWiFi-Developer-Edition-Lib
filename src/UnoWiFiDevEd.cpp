@@ -75,9 +75,6 @@ void mqttData(void* response)
 	mqtt_data_tmp = res.popString();
 }
 
-void ArduinoWifiClass::powerON(){}
-void ArduinoWifiClass::powerOFF(){}
-
 void ArduinoWifiClass::connect(char* ssid,char* pwd){
 	esp.wifiConnect(ssid, pwd);
 }

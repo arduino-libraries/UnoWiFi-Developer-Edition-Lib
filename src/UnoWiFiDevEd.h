@@ -22,10 +22,7 @@ class ArduinoWifiClass : public WifiData
 		void begin();
 		boolean connected();
 		void connect(char* , char*);
-
-		void powerON();
-		void powerOFF();
-
+		
 };
 
 class CiaoClass : public WifiData
