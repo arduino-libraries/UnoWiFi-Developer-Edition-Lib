@@ -10,7 +10,7 @@ WifiData EspSerial;
 String mac = "";         // a string to hold incoming data
 String ssid="";
 String espresponse="";
-boolean flag=false;
+bool flag=false;
 
 //These commands, in SLIP protocol, get the MAC Address from the ESP8266.
 char command1[]={0xc0,0x0,0xa,0x4,0x0,0x0,0x0,0x0,0x0,0x50,0x0,0xf0,0x3f,0xc0};

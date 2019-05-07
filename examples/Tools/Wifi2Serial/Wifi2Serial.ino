@@ -13,7 +13,7 @@
 #include <UnoWiFiDevEd.h>
 
 String inputString = "";         // a string to hold incoming data
-boolean stringComplete = false;  // whether the string is complete
+bool stringComplete = false;  // whether the string is complete
 
 
 void setup() {
