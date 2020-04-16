@@ -1,7 +1,7 @@
 # Uno WiFi Developer Edition Library
 Library for Arduino Uno WiFi Developer Edition
 
-For more information visit: http://www.arduino.org/learning/tutorials/boards-tutorials/content/arduino-uno-wifi-tutorial
+For more information visit: https://www.arduino.cc/en/Guide/ArduinoUnoWiFi
 
 ## License
 
