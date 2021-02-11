@@ -1,3 +1,6 @@
+_Note: This library will no longer be maintained by Arduino._
+
+
 # Uno WiFi Developer Edition Library
 Library for Arduino Uno WiFi Developer Edition
 
