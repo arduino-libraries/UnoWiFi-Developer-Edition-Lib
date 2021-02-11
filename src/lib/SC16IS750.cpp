@@ -62,6 +62,7 @@ int WifiData::read(void)
 size_t WifiData::write(uint8_t val)
 {
     WriteByte(val);
+    return 1;
 }
 
 void WifiData::pinMode(uint8_t pin, uint8_t i_o)
